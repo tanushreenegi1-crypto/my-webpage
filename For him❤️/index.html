@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine Special 💖</title>
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+  background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #ffd1dc, #ffa0b3);
+  background-size: 400% 400%;
+  animation: bgPulse 20s ease infinite;
+  position: relative;
+}
+
+/* Background pulse */
+@keyframes bgPulse {
+  0% {background-position:0% 0%;}
+  50% {background-position:100% 100%;}
+  100% {background-position:0% 0%;}
+}
+
+/* Card */
+.card {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* Buttons */
+button { padding:12px 22px; border:none; border-radius:25px; font-size:16px; margin:10px; cursor:pointer;}
+.yes { background:#ff4d6d; color:white;}
+.no { background:#ddd; position:absolute;}
+
+/* Love note */
+.love-note {
+  display:none;
+  background: rgba(255,255,255,0.95);
+  padding: 25px;
+  border-radius: 20px;
+  width: 500px;
+  max-height: 70vh;
+  overflow-y:auto;
+  text-align: left;
+  margin: 20px auto;
+  font-size:16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  animation: popNote 1s ease forwards;
+}
+
+@keyframes popNote {
+  0% { transform: scale(0); opacity:0;}
+  50% { transform: scale(1.2); opacity:1;}
+  100% { transform: scale(1); opacity:1;}
+}
+
+/* Floating hearts in background */
+.heart {
+  position: absolute;
+  bottom:-20px;
+  font-size:20px;
+  animation: floatUp 6s linear infinite, pulse 1s infinite alternate;
+  z-index:1;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity:1;}
+  100% { transform: translateY(-100vh); opacity:0;}
+}
+
+@keyframes pulse {
+  0% { transform: scale(1);}
+  100% { transform: scale(1.3);}
+}
+
+/* Big bursting heart */
+#bigHeart {
+  position: absolute;
+  top:50%;
+  left:50%;
+  font-size: 0;
+  opacity:0;
+  transform: translate(-50%,-50%) scale(0);
+  z-index:3;
+}
+
+@keyframes heartBurst {
+  0% { transform: translate(-50%,-50%) scale(0); opacity:1;}
+  50% { transform: translate(-50%,-50%) scale(3); opacity:1;}
+  100% { transform: translate(-50%,-50%) scale(0); opacity:0;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background music -->
+<audio id="music" loop>
+  <source src="dusktilldawn.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card">
+  <h1>Hey You 💌</h1>
+  <p>Will you be my Valentine? 🌸</p>
+  <button class="yes" onclick="yesClicked()">Yes 💖</button>
+  <button class="no" id="noBtn">No 🙈</button>
+</div>
+
+<!-- Big bursting heart -->
+<div id="bigHeart">💖</div>
+
+<!-- Love note -->
+<div class="love-note" id="loveNote">
+  <p>💌 My Dearest Rohit,</p>
+  <p>From the very first moment I met you, I felt my heart recognize its other half 🌟</p>
+  <p>Every smile you give, every word you speak, every little thing you do fills my world with joy ✨</p>
+  <p>You are the reason I believe in magic, in dreams, and in love 💖</p>
+  <p>When I’m with you, even the simplest moments feel extraordinary, and life feels complete 🥰</p>
+  <p>I cherish every second we spend together, every laugh we share, and every memory we create ❤️</p>
+  <p>No words can truly capture how much you mean to me, but I hope this little note comes close 💕</p>
+  <p>Forever and always, I promise to be by your side, through every joy and every challenge 💝</p>
+  <p>You are my heart, my soul, my everything… and I love you more than words could ever say 💖</p>
+  <p>Yours forever,</p>
+  <p>Tannu 💕</p>
+</div>
+
+<script>
+/* PASSWORD */
+let password = prompt("Enter the secret password 💌");
+if(password!=="rohit bbu"){
+  document.body.innerHTML="<h2>Access Denied 💔</h2>";
+}
+
+/* YES BUTTON */
+function yesClicked(){
+  const music=document.getElementById("music");
+  music.play().catch(()=>alert("Click Yes again to play music 🎵"));
+
+  // Big heart burst
+  const heart=document.getElementById("bigHeart");
+  heart.style.fontSize="100px";
+  heart.style.opacity="1";
+  heart.style.animation="heartBurst 1s ease forwards";
+
+  // Show note after 1s delay (heart burst duration)
+  setTimeout(()=>{
+    const note=document.getElementById("loveNote");
+    note.style.display="block";
+  },1000);
+
+  // Start continuous floating hearts in background
+  startFloatingHearts();
+}
+
+/* NO BUTTON */
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.left=Math.random()*(window.innerWidth-120)+"px";
+  noBtn.style.top=Math.random()*(window.innerHeight-120)+"px";
+});
+
+/* Continuous floating hearts */
+function startFloatingHearts(){
+  setInterval(()=>{
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=Math.random()*10+15+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),6000);
+  },500);
+}
+</script>
+</body>
+</html>
